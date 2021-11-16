@@ -4,9 +4,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class PrimitiveTypes {
-
     public static void main(String... args){
-
         System.out.println("Hello, world!");
         charType();
         minMax();
