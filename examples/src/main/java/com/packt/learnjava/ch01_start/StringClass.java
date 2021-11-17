@@ -4,6 +4,7 @@ public class StringClass {
     public static void main(String... args) {
         compareReferences();
         operatorAdd();
+        textBlock();
     }
 
     private static void compareReferences() {
@@ -56,7 +57,27 @@ public class StringClass {
         String r2 = str1;
         System.out.println(r1 == r2);      //prints: false
         System.out.println(r1.equals(r2)); //prints: false
-
     }
+
+    private static void textBlock() {
+        System.out.println("\nText block:");
+
+        String html1 = "<html>\n" +
+                "   <body>\n" +
+                "      <p>Hello World.</p>\n" +
+                "   </body>\n" +
+                "</html>\n";
+        System.out.println(html1);
+
+        String html2 = """
+             <html>
+                <body>
+                   <p>Hello World.</p>
+                </body>
+             </html>
+               """;
+        System.out.println(html2);
+    }
+
 }
 

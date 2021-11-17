@@ -44,9 +44,9 @@ public class Operators {
         System.out.println("\nEquality operators:");
         int i1 = 1;
         int i2 = 2;
-        System.out.println(i1 == i2);  //prints: false
-        System.out.println(i1 != i2);  //prints: true
-        System.out.println(i1 == (i2 -1));  //prints: true
+        System.out.println(i1 == i2);        //prints: false
+        System.out.println(i1 != i2);        //prints: true
+        System.out.println(i1 == (i2 -1));   //prints: true
         System.out.println(i1 != (i2 - 1));  //prints: false
     }
 
@@ -62,7 +62,6 @@ public class Operators {
         System.out.println(i1 <= (i2 - 1));  //prints: true
         float f = 1.2f;
         System.out.println(i1 < f); //prints: true
-
     }
 
     private static void logical(){
@@ -76,7 +75,6 @@ public class Operators {
         boolean d = false;
         System.out.println(c & d); //prints: false
         System.out.println(c | d); //prints: true
-
     }
 
     private static void conditional(){
@@ -99,7 +97,6 @@ public class Operators {
         int n = 1, m = 2;
         float k = n > m ? (n * m + 3) : ((float)n / m);
         System.out.println(k);           //prints: 0.5
-
     }
 
     private static void assignment(){
@@ -116,5 +113,4 @@ public class Operators {
         a %= 2;
         System.out.println(a); //prints: 0.0
     }
-
 }

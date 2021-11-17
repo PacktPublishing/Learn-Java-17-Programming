@@ -49,15 +49,9 @@ public class ControlFlow {
                 //do something completely different
         }
 
-/*
-        //Uncomment after adding --enable-preview option to the compiler and to the runtime
-
-        switch (x) {
-            case 1, 3 -> System.out.println("1 or 3");
-            case 4    -> System.out.println("4");
-            case 5, 6 -> System.out.println("5 or 6");
-            default   -> System.out.println("Not 1,3,4,5,6");
-        }
+        switchStatement(1);    //prints: 1 or 3: 1
+        switchStatement(2);    //prints: Not 1,3,4,5,6: 2
+        switchStatement(5);    //prints: 5 or 6: 5
 
         switch (x) {
             case 1, 3 -> {
@@ -70,14 +64,26 @@ public class ControlFlow {
             default   -> System.out.println("Not 1,3,4,5,6");
         }
 
-        int z = switch (x) {
-            case 1, 3 -> x + 2;
-            case 4    -> x - 4;
-            case 5, 6 -> x + 3;
-            default   -> 42;
-        };
-*/
+        System.out.println("\nswitchExpression1: ");
+        switchExpression1(0);    //prints: false
+        switchExpression1(1);    //prints: false
+        switchExpression1(2);    //prints: true
+
+        System.out.println("\nswitchExpression2: ");
+        switchExpression2(TWO);            //prints: 1
+        switchExpression2(FOUR);           //prints: 2
+        switchExpression2("blah"); //prints: 3
+
+        System.out.println("\nswitchExpression3: ");
+        switchExpression3(Num.TWO);        //prints: 1
+        switchExpression3(Num.FOUR);       //prints: 2
+        //switchExpression3("blah"); //does not compile
+
+        System.out.println("\nswitchExpression4: ");
+        switchExpression4(Num.TWO);        //prints: 1
+        switchExpression4(Num.THREE);      //prints: 5
     }
+
     private static void iteration(){
         System.out.println("\nIteration statements:");
 
@@ -86,7 +92,6 @@ public class ControlFlow {
             System.out.print(n + " ");   //prints: 0 1 2 3 4
             n++;
         }
-
         System.out.println();
 
         n = 0;
@@ -94,40 +99,38 @@ public class ControlFlow {
             System.out.print(n + " ");   //prints: 0 1 2 3 4
             n++;
         } while(n < 5);
-
         System.out.println();
 
         for (int i=0; i < 3; i++){
             System.out.print(i + " ");  //prints: 0 1 2
         }
-
         System.out.println();
 
-/*
         for (int i=0; i > -1; i++){
-            System.out.print(i + " ");  //prints: 0 1 2 ...
+            System.out.print(i + " ");  //prints: 0 1 2
+            if(i > 1) break;
         }
-*/
-        System.out.println("Loop 1:");
 
+        System.out.println("\n\nLoop 1:");
         for (int i=0, j=0; i < 3 && j < 3; ++i, ++j){
-            System.out.println(i + " " + j);
+            System.out.println(i + " " + j);  //prints: 0 0
+                                              //        1 1
+                                              //        2 2
         }
 
-        System.out.println("Loop 2:");
-
+        System.out.println("\nLoop 2:");
         for (int x = getInitialValue(), i=x == -2 ? x + 2 : 0, j=0;
              i < 3 || j < 3 ; ++i, j = i) {
-            System.out.println(i + " " + j);
+            System.out.println(i + " " + j);  //prints: 0 0
+                                              //        1 1
+                                              //        2 2
         }
 
-        System.out.println("Iterate of array:");
-
+        System.out.println("\nIterate of array:");
         int[] arr = {24, 42, 0};
         for (int i = 0; i < arr.length; i++){
             System.out.print(arr[i] + " ");  //prints: 24 42 0
         }
-
         System.out.println();
 
         //int[] arr = {24, 42, 0};
@@ -135,8 +138,7 @@ public class ControlFlow {
             System.out.print(a + " ");  //prints: 24 42 0
         }
 
-        System.out.println("\nIterate of list:");
-
+        System.out.println("\n\nIterate of list:");
         List<String> list = List.of("24", "42", "0");
         for (String s: list){
             System.out.print(s + " ");  //prints: 24 42 0
@@ -146,7 +148,7 @@ public class ControlFlow {
     private static int getInitialValue(){ return -2; }
 
     private static void exception(){
-        System.out.println("\nException statements:");
+        System.out.println("\n\nException statements:");
         int x = 12;
         try {
             //x = someMethod();
@@ -205,16 +207,15 @@ public class ControlFlow {
         String checked = "";
         cont: for(List<String> l: listOfLists){
             for (String s: l){
-                System.out.print(s + " "); //prints: 24 16 1 2 1 43 24 22 31
+                System.out.print(s + " ");       //prints: 24 16 1 2 1 43 24 22 31
                 if(s.contains("3")){
                     continue cont;
                 }
                 checked += s + " ";
             }
         }
-        System.out.println("Found " + found);  //prints: Found 43
+        System.out.println("Found " + found);      //prints: Found 43
         System.out.println("Checked " + checked);  //prints: Checked 24 16 1 2 1 24 22
-
 
         int result = 0;
         List<List<Integer>> source = List.of(
@@ -231,8 +232,17 @@ public class ControlFlow {
                 }
             }
         }
-        System.out.println("result=" + result);
+        System.out.println("result=" + result); //prints: result=32
 
+        System.out.println("\nReturn statement:");
+        String r = returnDemo(3);
+        System.out.println(r);                 //prints: Not enough
+
+        r = returnDemo(10);
+        System.out.println(r);                 //prints: Exactly right
+
+        r = returnDemo(12);
+        System.out.println(r);                 //prints: More than enough
     }
 
     private static String returnDemo(int i){
@@ -244,4 +254,54 @@ public class ControlFlow {
             return "More than enough";
         }
     }
+
+    private static void switchStatement(int x){
+        switch (x) {
+            case 1, 3 -> System.out.print("1 or 3");
+            case 4    -> System.out.print("4");
+            case 5, 6 -> System.out.print("5 or 6");
+            default   -> System.out.print("Not 1,3,4,5,6");
+        }
+        System.out.println(": " + x);
+    }
+
+    private static void switchExpression1(int i){
+        boolean b = switch(i) {
+            case 0, 1 -> false;
+            case 2 -> true;
+            default -> false;
+        };
+        System.out.println(b);
+    }
+
+    private static final String ONE = "one", TWO = "two", THREE = "three", FOUR = "four", FIVE = "five";
+    private static void switchExpression2(String number){
+        var res = switch(number) {
+            case ONE, TWO -> 1;
+            case THREE, FOUR, FIVE -> 2;
+            default -> 3;
+        };
+        System.out.println(res);
+    }
+
+    private enum Num { ONE, TWO, THREE, FOUR, FIVE }
+    private static void switchExpression3(Num number){
+        var res = switch(number) {
+            case ONE, TWO -> 1;
+            case THREE, FOUR, FIVE -> 2;
+        };
+        System.out.println(res);
+    }
+
+    private static void switchExpression4(Num number){
+        var res = switch(number) {
+            case ONE, TWO -> 1;
+            case THREE, FOUR, FIVE -> {
+                String s = number.name();
+                yield s.length();
+            }
+        };
+        System.out.println(res);
+    }
+
 }
