@@ -1,8 +1,5 @@
 package com.packt.learnjava.ch13_functional;
 
-
-import org.jetbrains.annotations.NotNull;
-
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
@@ -55,7 +52,7 @@ public class LambdaExpressions {
 
     private static void localVariableSyntax(){
         BiFunction<Double, Integer, Double> f4 =
-                (@NotNull var x, @NotNull var y) -> x / y;
+                (var x, var y) -> x / y;
         System.out.println(f4.apply(null, 2));
     }
 }
