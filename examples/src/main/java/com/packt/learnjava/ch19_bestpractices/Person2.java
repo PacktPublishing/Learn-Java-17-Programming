@@ -1,4 +1,4 @@
-package com.packt.learnjava.ch18_bestpractices;
+package com.packt.learnjava.ch19_bestpractices;
 
 import java.util.Comparator;
 import java.util.Objects;
