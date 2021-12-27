@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class Collections4 {
     public static void main(String... args){
-
         bag();
         bidiMap();
         iterableMap();
