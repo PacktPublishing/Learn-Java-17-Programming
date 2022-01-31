@@ -29,7 +29,7 @@ public class ConcurrentCollections {
     private static void modifyCopyOnWriteArrayList(){
         System.out.println("\nmodifyCopyOnWriteArrayList():\n");
         List<String> list = new CopyOnWriteArrayList<>(Arrays.asList("One", "Two"));
-        System.out.println(list);
+        System.out.println(list);          //prints: [One, Two]
         try {
             for (String e : list) {
                 System.out.print(e + " "); //prints: One Two
