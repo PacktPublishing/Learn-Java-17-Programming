@@ -89,7 +89,7 @@ public class Operators {
         System.out.println(c || d); //prints: true
 
         int h = 1;
-        System.out.println(h > 3 & h++ < 3);  //prints: false
+        System.out.println(h > 3 && h++ < 3);  //prints: false
         System.out.println(h);                //prints: 2
         System.out.println(h > 3 && h++ < 3); //prints: false
         System.out.println(h);                //prints: 2
