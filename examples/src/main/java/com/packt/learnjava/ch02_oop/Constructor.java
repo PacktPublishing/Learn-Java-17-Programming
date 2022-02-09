@@ -8,7 +8,7 @@ public class Constructor {
         ref1.someParentMethod();
         ((TheChildClass) ref2).someChildMethod();
         ref2.someParentMethod();
-        System.out.println(ref1.toString());
+        System.out.println(ref1);
     }
 
     private static class SomeClass {
@@ -46,7 +46,8 @@ public class Constructor {
         private String prop;
 
         public TheChildClass(String prop){
-            //super(42);
+            super(42); //optional, because TheParentClass
+                             // has constructor without parameters
             this.prop = prop;
         }
         public TheChildClass(int arg1, String arg2){
