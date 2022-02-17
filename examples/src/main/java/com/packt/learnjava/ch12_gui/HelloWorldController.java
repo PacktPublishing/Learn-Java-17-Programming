@@ -46,9 +46,10 @@ public class HelloWorldController {
     private void goToPage2(String user)
     {
         try {
-
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            String file = classLoader.getResource("helloWorld2.fxml").getFile();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(new URL("file:src/main/resources/helloWorld2.fxml"));
+            loader.setLocation(new URL("file:" + file));
             Scene scene = loader.load();
 
             HelloWorldController2 c = loader.getController();

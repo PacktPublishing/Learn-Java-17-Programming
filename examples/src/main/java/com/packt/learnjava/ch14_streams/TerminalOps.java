@@ -22,17 +22,17 @@ import java.util.stream.Stream;
 
 public class TerminalOps {
     public static void main(String... args){
-        collect1();
+        //collect1();
         foreach();
-        createPersons();
-        count();
-        match();
-        find();
-        optional();
-        minMax();
-        toArray();
-        reduce();
-        collect2();
+//        createPersons();
+//        count();
+//        match();
+//        find();
+//        optional();
+//        minMax();
+//        toArray();
+//        reduce();
+//        collect2();
     }
 
     private static void collect1(){
@@ -45,7 +45,9 @@ public class TerminalOps {
     }
 
     private static void foreach(){
-        Path path = Paths.get("src/main/resources/persons.csv");
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        String file = classLoader.getResource("persons.csv").getFile();
+        Path path = Paths.get(file);
         try (Stream<String> lines = Files.newBufferedReader(path).lines()) {
             lines.filter(s -> s.contains("J"))
                  .forEach(System.out::println);  //prints: 23 , Ji m
@@ -57,7 +59,9 @@ public class TerminalOps {
 
     private static void createPersons(){
         List<Person> persons = new ArrayList<>();
-        Path path = Paths.get("src/main/resources/persons.csv");
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        String file = classLoader.getResource("persons.csv").getFile();
+        Path path = Paths.get(file);
         try (Stream<String> lines = Files.newBufferedReader(path).lines()) {
             //persons = createPersonsUsingForEach(lines);
             //persons = createPersonsUsingCollect1(lines);

@@ -167,8 +167,11 @@ public class HelloWorld extends Application {
 
     public void start5(Stage primaryStage) {
         try {
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            String file = classLoader.getResource("helloWorld.fxml").getFile();
+
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(new URL("file:src/main/resources/helloWorld.fxml"));
+            loader.setLocation(new URL("file:" + file));
             Scene scene = loader.load();
 
             primaryStage.setTitle("Simple form example");
@@ -183,9 +186,12 @@ public class HelloWorld extends Application {
 
     public void start(Stage primaryStage) {
         try {
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            String file = classLoader.getResource("packt.png").getFile();
+
             Text txt = new Text("What a beautiful image!");
 
-            FileInputStream input = new FileInputStream("src/main/resources/packt.png");
+            FileInputStream input = new FileInputStream(file);
             Image image = new Image(input);
             ImageView iv = new ImageView(image);
 

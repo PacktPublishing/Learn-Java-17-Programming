@@ -22,6 +22,7 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class InputOutputStream {
+    private static ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     public static void main(String... args) throws Exception {
         byteArrayInputStream1();
         byteArrayInputStream2();
@@ -94,21 +95,22 @@ public class InputOutputStream {
 
     private static void fileInputStream1() {
         System.out.println("\nfileInputStream1():");
-        String filePath = "src/main/resources/hello.txt";
-        try(FileInputStream fis=new FileInputStream(filePath)){
+        String file = classLoader.getResource("hello.txt").getFile();
+        try(FileInputStream fis = new FileInputStream(file)){
             int data;
             while ((data = fis.read()) != -1) {
                 System.out.print(((char)data) + " ");   //prints: H e l l o !
             }
         } catch (Exception ex){
             ex.printStackTrace();
+            pauseMs(100); //pause to let stack trace being constructed
         }
     }
 
     private static void fileInputStream2() {
         System.out.println("\nfileInputStream2():");
-        String filePath = "src/main/resources/hello.txt";
-        try(FileInputStream fis=new FileInputStream(filePath)){
+        String file = classLoader.getResource("hello.txt").getFile();
+        try(FileInputStream fis=new FileInputStream(file)){
             int data;
             while ((data = fis.read()) != -1) {
                 System.out.print((data) + " ");   //prints: 72 101 108 108 111 33
@@ -238,8 +240,10 @@ public class InputOutputStream {
 
     private static void sequenceInputStream() {
         System.out.println("\nsequenceInputStream():");
-        try(FileInputStream fis1=new FileInputStream("src/main/resources/hello.txt");
-            FileInputStream fis2=new FileInputStream("src/main/resources/howAreYou.txt");
+        String file1 = classLoader.getResource("hello.txt").getFile();
+        String file2 = classLoader.getResource("howAreYou.txt").getFile();
+        try(FileInputStream fis1=new FileInputStream(file1);
+            FileInputStream fis2=new FileInputStream(file2);
             SequenceInputStream sis=new SequenceInputStream(fis1, fis2)){
             int i;
             while((i = sis.read()) > -1){
@@ -252,7 +256,8 @@ public class InputOutputStream {
 
     private static void filterInputStream() {
         System.out.println("\nfilterInputStream():");
-        try(FileInputStream  fis = new FileInputStream("src/main/resources/hello.txt");
+        String file = classLoader.getResource("hello.txt").getFile();
+        try(FileInputStream fis = new FileInputStream(file);
             FilterInputStream filter = new BufferedInputStream(fis)){
             int i;
             while((i = filter.read()) > -1){
@@ -305,8 +310,8 @@ public class InputOutputStream {
 
     private static void streamTokenizer(){
         System.out.println("\nstreamTokenizer():");
-        String filePath = "src/main/resources/tokens.txt";
-        try(FileReader fr = new FileReader(filePath);
+        String file = classLoader.getResource("tokens.txt").getFile();
+        try(FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr)){
             StreamTokenizer st = new StreamTokenizer(fr);
             st.eolIsSignificant(true);
@@ -348,8 +353,8 @@ public class InputOutputStream {
 
     private static void scanner2() {
         System.out.println("\nscanner2():\n");
-        String filePath = "src/main/resources/tokens.txt";
-        try(Scanner sc = new Scanner(new File(filePath))){
+        String file = classLoader.getResource("tokens.txt").getFile();
+        try(Scanner sc = new Scanner(new File(file))){
             while(sc.hasNextLine()){
                 System.out.println(sc.nextLine());
             }
@@ -376,5 +381,12 @@ public class InputOutputStream {
         }
     }
 
+    private static void pauseMs(long ms){
+        try {
+            TimeUnit.MILLISECONDS.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

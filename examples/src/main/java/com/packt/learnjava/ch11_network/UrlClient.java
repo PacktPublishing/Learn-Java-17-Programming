@@ -46,9 +46,9 @@ public class UrlClient {
 
     private static void getFromFile(){
         try {
-            URL url = new URL("file:src/main/resources/hello.txt");
-            System.out.println(url.getPath());  //src/main/resources/hello.txt
-            System.out.println(url.getFile());  //src/main/resources/hello.txt
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            String file = classLoader.getResource("hello.txt").getFile();
+            URL url = new URL("file:" + file);
             try(InputStream is = url.openStream()){
                 int data = is.read();
                 while(data != -1){

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Scene?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.Text?>
+
+<Scene fx:controller="com.packt.learnjava.ch12_gui.HelloWorldController"
+       xmlns:fx="http://javafx.com/fxml"
+       width="350" height="200">
+    <GridPane alignment="center" hgap="15" vgap="5">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+        <Text id="textFill" text="Fill the form and click Submit"
+              GridPane.rowIndex="0" GridPane.columnSpan="2">
+            <GridPane.halignment>center</GridPane.halignment>
+        </Text>
+        <Label text="First name"
+               GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="tfFirstName"
+                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label text="Last name"
+               GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="tfLastName"
+                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <Label text="Age"
+               GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <TextField fx:id="tfAge"
+                   GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        <Button text="Submit"
+                GridPane.columnIndex="1" GridPane.rowIndex="4"
+                onAction="#submitClicked">
+            <GridPane.halignment>center</GridPane.halignment>
+        </Button>
+    </GridPane>
+</Scene>

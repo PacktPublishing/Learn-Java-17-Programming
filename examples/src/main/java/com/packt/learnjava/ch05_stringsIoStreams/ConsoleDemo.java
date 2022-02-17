@@ -12,7 +12,6 @@ public class ConsoleDemo {
         // They are waiting for the user input
         //console2();
         //console3();
-        //console4();
     }
 
     private static void console1(){
@@ -25,6 +24,7 @@ public class ConsoleDemo {
         System.out.println("\nconsole2:");
         Console console = System.console();
 
+        System.out.print("Enter something 1: ");
         String line = console.readLine();
         System.out.println("Entered 1: " + line);
         line = console.readLine("Enter something 2: ");
@@ -32,6 +32,7 @@ public class ConsoleDemo {
         line = console.readLine("Enter some%s", "thing 3: ");
         System.out.println("Entered 3: " + line);
 
+        System.out.print("Enter password: ");
         char[] password = console.readPassword();
         System.out.println("Entered 4: " + new String(password));
         password = console.readPassword("Enter password 5: ");
@@ -43,13 +44,6 @@ public class ConsoleDemo {
     private static void console3(){
         System.out.println("\nconsole3:");
         Console console = System.console();
-        String line = console.format("Enter some%s", "thing:").readLine();
-        System.out.println("Here what I got: " + line);
-    }
-
-    private static void console4(){
-        System.out.println("\nconsole4:");
-        Console console = System.console();
 
         try (Reader reader = console.reader()){
             char[] chars = new char[10];
@@ -59,12 +53,10 @@ public class ConsoleDemo {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         PrintWriter out = console.writer();
         out.println("Hello!");
 
         console.flush();
-
     }
 
 }

@@ -46,12 +46,14 @@ public class OtherEffects extends Application {
     public void start(Stage primaryStage) {
         try {
             Text txt = new Text();
-
-            FileInputStream inputP = new FileInputStream("src/main/resources/packt.png");
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            String file = classLoader.getResource("packt.png").getFile();
+            FileInputStream inputP = new FileInputStream(file);
             Image imageP = new Image(inputP);
             ImageView ivP = new ImageView(imageP);
 
-            FileInputStream inputM = new FileInputStream("src/main/resources/mount.jpeg");
+            String file2 = classLoader.getResource("mount.jpeg").getFile();
+            FileInputStream inputM = new FileInputStream(file2);
             Image imageM = new Image(inputM);
             ImageView ivM = new ImageView(imageM);
             ivM.setPreserveRatio(true);

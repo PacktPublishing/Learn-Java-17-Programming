@@ -3,6 +3,7 @@ package com.packt.learnjava.ch05_stringsIoStreams;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.net.URI;
 
 public class Files {
     public static void main(String... args) throws Exception {
@@ -25,10 +26,10 @@ public class Files {
         String path = "demo1" + File.separator + "demo2" + File.separator;
         String fileName = "FileName.txt";
         File f = new File(path + fileName);
-        //File f = new File(path, fileName);
-        //File f = new File(new File(path), fileName);
-        //URI uri = new File(path + fileName).toURI();
-        //File f = new File(uri);
+        f = new File(path, fileName);
+        f = new File(new File(path), fileName);
+        URI uri = new File(path + fileName).toURI();
+        f = new File(uri);
         try {
             new File(path).mkdirs();
             f.createNewFile();

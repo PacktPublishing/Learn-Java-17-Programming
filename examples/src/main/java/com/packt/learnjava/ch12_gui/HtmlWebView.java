@@ -114,11 +114,14 @@ public class HtmlWebView extends Application {
 
     public void start9(Stage primaryStage) {
         try {
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            String file = classLoader.getResource("form.html").getFile();
+
             Text txt = new Text("Fill the form and click Submit");
 
             WebView wv = new WebView();
             WebEngine we = wv.getEngine();
-            File f = new File("src/main/resources/form.html");
+            File f = new File(file);
             we.load(f.toURI().toString());
 
             VBox vb = new VBox(txt, wv);
@@ -172,11 +175,13 @@ public class HtmlWebView extends Application {
     }
 
     public void start11(Stage primaryStage) {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        String file = classLoader.getResource("jb.mp3").getFile();
 
         Text txt1 = new Text("What a beautiful music!");
         Text txt2 = new Text("If you don't hear music, turn up the volume.");
 
-        File f = new File("src/main/resources/jb.mp3");
+        File f = new File(file);
         Media m = new Media(f.toURI().toString());
         MediaPlayer mp = new MediaPlayer(m);
         MediaView mv = new MediaView(mp);
@@ -198,10 +203,12 @@ public class HtmlWebView extends Application {
     }
 
     public void start12(Stage primaryStage) {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        String file = classLoader.getResource("sea.mp4").getFile();
 
         Text txt = new Text("What a beautiful movie!");
 
-        File f = new File("src/main/resources/sea.mp4");
+        File f = new File(file);
         Media m = new Media(f.toURI().toString());
         MediaPlayer mp = new MediaPlayer(m);
         MediaView mv = new MediaView(mp);
@@ -229,16 +236,19 @@ public class HtmlWebView extends Application {
     }
 
     public void start13(Stage primaryStage) {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        String file = classLoader.getResource("jb.mp3").getFile();
 
         Text txt1 = new Text("What a beautiful movie and sound!");
         Text txt2 = new Text("If you don't hear music, turn up the volume.");
 
-        File fs = new File("src/main/resources/jb.mp3");
+        File fs = new File(file);
         Media ms = new Media(fs.toURI().toString());
         MediaPlayer mps = new MediaPlayer(ms);
         MediaView mvs = new MediaView(mps);
 
-        File fv = new File("src/main/resources/sea.mp4");
+        String file2 = classLoader.getResource("sea.mp4").getFile();
+        File fv = new File(file2);
         Media mv = new Media(fv.toURI().toString());
         MediaPlayer mpv = new MediaPlayer(mv);
         MediaView mvv = new MediaView(mpv);
