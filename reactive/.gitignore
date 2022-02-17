@@ -5,6 +5,7 @@
 .project
 .settings
 rebel.xml
+*.iml
 
 # Runtime artifacts
 *.log

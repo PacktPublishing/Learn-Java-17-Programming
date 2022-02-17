@@ -1,6 +1,10 @@
 package com.packt.learnjava.ch07_libraries;
 
-import org.apache.commons.collections4.*;
+import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.IterableMap;
+import org.apache.commons.collections4.MapIterator;
+import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.bidimap.TreeBidiMap;
 import org.apache.commons.collections4.map.HashedMap;
