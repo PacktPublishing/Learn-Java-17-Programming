@@ -9,6 +9,8 @@ rebel.xml
 
 # Runtime artifacts
 *.log
+output.txt
+someCLass.bin
 
 # OS generated files
 .DS_Store

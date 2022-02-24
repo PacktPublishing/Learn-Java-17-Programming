@@ -6,9 +6,12 @@
 .settings
 rebel.xml
 *.iml
+.idea
 
 # Runtime artifacts
 *.log
+output.txt
+someClass.bin
 
 # OS generated files
 .DS_Store

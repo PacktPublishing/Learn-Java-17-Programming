@@ -56,12 +56,12 @@ public class BoxingUnboxing {
         System.out.println(l2);      //prints: 42
 
         double d2 = l1;              //implicit unboxing
-        System.out.println(d2);      //prints: 42
+        System.out.println(d2);      //prints: 42.0
 
         long l3 = i1;                //implicit unboxing
         System.out.println(l3);      //prints: 42
 
         double d3 = i1;                //implicit unboxing
-        System.out.println(d3);      //prints: 42
+        System.out.println(d3);      //prints: 42.0
     }
 }
