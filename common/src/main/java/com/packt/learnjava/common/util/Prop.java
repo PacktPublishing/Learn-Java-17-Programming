@@ -1,14 +1,13 @@
 package com.packt.learnjava.common.util;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class Prop {
     public static Properties getProperties(ClassLoader classLoader, String fileName){
-        String file = classLoader.getResource(fileName).getFile();
         Properties properties = new Properties();
-        try(FileInputStream fis = new FileInputStream(file)){
-            properties.load(fis);
+        try(InputStream is = classLoader.getResourceAsStream(fileName)){
+            properties.load(is);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

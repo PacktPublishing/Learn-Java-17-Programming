@@ -14,10 +14,9 @@ import java.net.InetSocketAddress;
 import java.util.Properties;
 
 public class Server {
-    private static Properties properties;
     public static void main(String[] args){
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        properties = Prop.getProperties(classLoader, "app.properties");
+        Properties properties = Prop.getProperties(classLoader, "app.properties");
         int port = Prop.getInt(properties, "port");
 
         try {
@@ -32,9 +31,9 @@ public class Server {
 
     private static class PostHandler implements HttpHandler {
         public void handle(HttpExchange exch) {
-            System.out.println();   //to skip the row
-            System.out.println(exch.getRequestURI());            //prints: /something
-            System.out.println(exch.getHttpContext().getPath()); //prints: /something
+            System.out.println();   //to skip the row in the output
+            //System.out.println(exch.getRequestURI());            //prints: /something
+            //System.out.println(exch.getHttpContext().getPath()); //prints: /something
             try (InputStream is = exch.getRequestBody();
                  BufferedReader in = new BufferedReader(new InputStreamReader(is));
                  OutputStream os = exch.getResponseBody()){

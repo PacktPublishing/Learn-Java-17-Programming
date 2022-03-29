@@ -21,17 +21,17 @@ import java.util.function.Function;
 
 public class HttpClientDemo {
     public static void main(String[] args) {
-        /* Run UrlServer before uncommenting and running
+        /* Run Server class before uncommenting and running
          * any of the following examples
          */
         //get();
         //post();
-        //getAsync();
+        //getAsync1();
+        //getAsync2();
         //postAsync();
         //postAsyncMultiple();
-        //postAsyncMultipleUsingPool();
+        //postAsyncMultipleCustomPool();
         //push();
-
         webSocket();
     }
 
@@ -72,19 +72,37 @@ public class HttpClientDemo {
         }
     }
 
-    private static void getAsync(){
+    private static void getAsync1(){
         HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:3333/something"))
                 .GET()   // default
                 .build();
-/*
+
         CompletableFuture<Void> cf =
         httpClient.sendAsync(req, BodyHandlers.ofString())
                 .thenAccept(resp -> System.out.println("Response: " +
                                 resp.statusCode() + " : " + resp.body()));
-*/
+
+        System.out.println("The request was sent asynchronously...");
+        try {
+            System.out.println("CompletableFuture get: " +
+                    cf.get(5, TimeUnit.SECONDS));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("Exit the client...");
+    }
+
+    private static void getAsync2(){
+        HttpClient httpClient = HttpClient.newHttpClient();
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:3333/something"))
+                .GET()   // default
+                .build();
+
         CompletableFuture<String> cf =
                 httpClient.sendAsync(req, BodyHandlers.ofString())
                         .thenApply(resp -> "Server responded: " + resp.body());
@@ -149,7 +167,7 @@ public class HttpClientDemo {
         System.out.println("Exit the client...");
     }
 
-    private static void postAsyncMultipleUsingPool(){
+    private static void postAsyncMultipleCustomPool(){
         ExecutorService pool = Executors.newFixedThreadPool(2);
 
         HttpClient httpClient = HttpClient.newBuilder().executor(pool).build();
@@ -188,7 +206,8 @@ public class HttpClientDemo {
                 .build();
 
         CompletableFuture cf =
-                httpClient.sendAsync(req, BodyHandlers.ofString(), (PushPromiseHandler) HttpClientDemo::applyPushPromise);
+                httpClient.sendAsync(req, BodyHandlers.ofString(),
+                        (PushPromiseHandler) HttpClientDemo::applyPushPromise);
 
         System.out.println("The request was sent asynchronously...");
         try {
@@ -214,7 +233,7 @@ public class HttpClientDemo {
     private static void webSocket(){
         HttpClient httpClient = HttpClient.newHttpClient();
         WebSocket webSocket = httpClient.newWebSocketBuilder()
-                .buildAsync(URI.create("ws://echo.websocket.org"), new WsClient())
+                .buildAsync(URI.create("ws://echo.websocket.events"), new WsClient())
                 .join();
 
         System.out.println("The WebSocket was created and ran asynchronously.");
