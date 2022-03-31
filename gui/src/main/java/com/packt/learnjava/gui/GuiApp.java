@@ -28,7 +28,7 @@ public class GuiApp extends Application {
     }
     @Override
     public void stop(){
-        System.out.println("Doing what has to be done before closing");
+        System.out.println("Doing what has to be done...");
     }
 
    /*

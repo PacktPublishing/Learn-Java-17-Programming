@@ -31,7 +31,7 @@ public class Controller01 {
             loader.setLocation(new URL("file:" + file));
             Scene scene = loader.load();
 
-            primaryStage.setTitle("Simple form example");
+            primaryStage.setTitle("First page of GUI App");
             primaryStage.setScene(scene);
             primaryStage.onCloseRequestProperty()
                     .setValue(e -> System.out.println("\nBye! See you later!"));

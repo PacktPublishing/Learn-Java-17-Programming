@@ -27,7 +27,7 @@ public class Controller02 {
             c.textHello.setText(hello);
 
             Stage primaryStage = new Stage();
-            primaryStage.setTitle("Simple form example. Page 2.");
+            primaryStage.setTitle("Second page of GUI App");
             primaryStage.setScene(scene);
             primaryStage.onCloseRequestProperty()
                     .setValue(e -> {
@@ -39,6 +39,4 @@ public class Controller02 {
             ex.printStackTrace();
         }
     }
-
-
 }
