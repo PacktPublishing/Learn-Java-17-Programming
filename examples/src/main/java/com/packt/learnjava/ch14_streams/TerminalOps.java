@@ -22,17 +22,17 @@ import java.util.stream.Stream;
 
 public class TerminalOps {
     public static void main(String... args){
-        //collect1();
-        foreach();
-//        createPersons();
-//        count();
-//        match();
-//        find();
-//        optional();
-//        minMax();
-//        toArray();
-//        reduce();
-//        collect2();
+        collect1();
+        //foreach();
+        //createPersons();
+        //count();
+        //match();
+        //find();
+        //optional();
+        //minMax();
+        //toArray();
+        //reduce();
+        //collect2();
     }
 
     private static void collect1(){
