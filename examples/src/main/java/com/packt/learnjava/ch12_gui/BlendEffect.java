@@ -43,7 +43,7 @@ public class BlendEffect extends Application {
         --module-path /path/JavaFX/lib
         --add-modules=javafx.controls,javafx.fxml
 
-        If you run it from IDE, add these VM options to Run Configuration.
+        If you run it from IntelliJ, add these VM options to Run Configuration.
     */
 
     // To run examples, remove the number
@@ -59,12 +59,12 @@ public class BlendEffect extends Application {
     // So, run the application as-is if you would like to see the demo.
 
     //Set effect/mode on the node
-    public void start1(Stage primaryStage) {
+    public void start(Stage primaryStage) {
         try {
             BlendMode bm1 = BlendMode.MULTIPLY;
             BlendMode bm2 = BlendMode.SRC_OVER;
-            Node[] node = setEffectOnGroup(bm1, bm2);
-            //Node[] node = setModeOnGroup(bm1, bm2);
+            //Node[] node = setEffectOnGroup(bm1, bm2);
+            Node[] node = setModeOnGroup(bm1, bm2);
             //Node[] node = setEffectOnCircle(bm1, bm2);
             //Node[] node = setEffectOnSquare(bm1, bm2);
             //Node[] node = setModeOnCircle(bm1, bm2);
@@ -146,7 +146,7 @@ public class BlendEffect extends Application {
     }
 
     // ReactiveSystemDemo all modes
-    public void start(Stage primaryStage) {
+    public void start3(Stage primaryStage) {
         try {
             Text txt1 = new Text("Circle is top input");
             Text txt2 = new Text();

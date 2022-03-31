@@ -38,6 +38,7 @@ public class HtmlWebView extends Application {
         --add-exports javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED
         --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED
         --add-exports javafx.graphics/com.sun.javafx.util=ALL-UNNAMED
+        --add-exports javafx.base/com.sun.javafx=ALL-UNNAMED
         --add-exports javafx.base/com.sun.javafx.logging=ALL-UNNAMED
         --add-exports javafx.graphics/com.sun.prism=ALL-UNNAMED
         --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
@@ -56,7 +57,7 @@ public class HtmlWebView extends Application {
         --add-exports javafx.graphics/com.sun.scenario.effect.impl.prism=ALL-UNNAMED
         --add-exports javafx.graphics/com.sun.javafx.scene.text=ALL-UNNAMED
 
-       If you run it from IDE, add these VM options to Run Configuration.
+       If you run it from IntelliJ, add these VM options to Run Configuration.
     */
 
     // To run examples, remove the number
@@ -86,7 +87,7 @@ public class HtmlWebView extends Application {
         }
     }
 
-    public void start8(Stage primaryStage) {
+    public void start2(Stage primaryStage) {
         try {
             Text txt = new Text("Below is the embedded HTML:");
 
@@ -112,7 +113,7 @@ public class HtmlWebView extends Application {
         }
     }
 
-    public void start9(Stage primaryStage) {
+    public void start3(Stage primaryStage) {
         try {
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
             String file = classLoader.getResource("form.html").getFile();
@@ -141,7 +142,7 @@ public class HtmlWebView extends Application {
         }
     }
 
-    public void start10(Stage primaryStage) {
+    public void start4(Stage primaryStage) {
 
         Text txt = new Text("Enjoy searching the Web!");
 
@@ -174,7 +175,7 @@ public class HtmlWebView extends Application {
         primaryStage.show();
     }
 
-    public void start11(Stage primaryStage) {
+    public void start5(Stage primaryStage) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         String file = classLoader.getResource("jb.mp3").getFile();
 
@@ -202,7 +203,7 @@ public class HtmlWebView extends Application {
         mp.play();
     }
 
-    public void start12(Stage primaryStage) {
+    public void start6(Stage primaryStage) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         String file = classLoader.getResource("sea.mp4").getFile();
 
@@ -235,7 +236,7 @@ public class HtmlWebView extends Application {
         mp.play();
     }
 
-    public void start13(Stage primaryStage) {
+    public void start7(Stage primaryStage) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         String file = classLoader.getResource("jb.mp3").getFile();
 
@@ -269,8 +270,4 @@ public class HtmlWebView extends Application {
         mpv.play();
         mps.play();
     }
-
-
-
-
 }

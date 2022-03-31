@@ -43,7 +43,7 @@ public class HelloWorld extends Application {
         --module-path /path/JavaFX/lib
         --add-modules=javafx.controls,javafx.fxml
 
-        If you run it from IDE, add these VM options to Run Configuration.
+        If you run it from IntelliJ, add these VM options to Run Configuration.
     */
 
     // To run examples, remove the number
@@ -145,7 +145,7 @@ public class HelloWorld extends Application {
         txt.relocate(115, 40);
 
         Button btn = new Button("Exit");
-        btn.setStyle("-fx-text-fill: white; -fx-background-color: red;");
+        //btn.setStyle("-fx-text-fill: white; -fx-background-color: red;");
         btn.relocate(155, 80);
         btn.setOnAction(e -> {
             System.out.println("Bye! See you later!");
@@ -165,7 +165,7 @@ public class HelloWorld extends Application {
         primaryStage.show();
     }
 
-    public void start5(Stage primaryStage) {
+    public void start(Stage primaryStage) {
         try {
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
             String file = classLoader.getResource("helloWorld.fxml").getFile();
@@ -184,7 +184,7 @@ public class HelloWorld extends Application {
         }
     }
 
-    public void start(Stage primaryStage) {
+    public void start6(Stage primaryStage) {
         try {
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
             String file = classLoader.getResource("packt.png").getFile();
@@ -211,7 +211,4 @@ public class HelloWorld extends Application {
             ex.printStackTrace();
         }
     }
-
-
-
 }

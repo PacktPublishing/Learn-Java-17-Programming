@@ -33,40 +33,8 @@ public class HelloWorldController {
         }
         fn = fn.isBlank() ? "Nick" : fn;
         ln = ln.isBlank() ? "Samoylov" : ln;
-        String user = "Hello, " + fn + " " + ln + ", age " + a + "!";
-        //System.out.println("\nHello, " + fn + " " + ln + ", age " + a + "!");
-        //Platform.exit();
-
-        goToPage2(user);
-        Node source = (Node) e.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        String hello = "Hello, " + fn + " " + ln + ", age " + a + "!";
+        System.out.println("\n" + hello);
+        Platform.exit();
     }
-
-    private void goToPage2(String user)
-    {
-        try {
-            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-            String file = classLoader.getResource("helloWorld2.fxml").getFile();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(new URL("file:" + file));
-            Scene scene = loader.load();
-
-            HelloWorldController2 c = loader.getController();
-            c.textUser.setText(user);
-
-            Stage primaryStage = new Stage();
-            primaryStage.setTitle("Simple form example. Page 2.");
-            primaryStage.setScene(scene);
-            primaryStage.onCloseRequestProperty()
-                    .setValue(e -> {
-                        System.out.println("\nBye! See you later!");
-                        Platform.exit();
-                    });
-            primaryStage.show();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
 }
