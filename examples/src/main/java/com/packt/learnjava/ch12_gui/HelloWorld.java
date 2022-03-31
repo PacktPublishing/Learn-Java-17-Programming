@@ -54,7 +54,7 @@ public class HelloWorld extends Application {
     // rename start1() to start() and start() to start1()
     // and execute this class again, so on.
 
-    public void start1(Stage primaryStage) {
+    public void start(Stage primaryStage) {
         Text txt = new Text("Hello, world!");
         txt.relocate(135, 40);
 
@@ -165,7 +165,7 @@ public class HelloWorld extends Application {
         primaryStage.show();
     }
 
-    public void start(Stage primaryStage) {
+    public void start5(Stage primaryStage) {
         try {
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
             String file = classLoader.getResource("helloWorld.fxml").getFile();
