@@ -351,8 +351,8 @@ public class TerminalOps {
         System.out.println(sum);  //prints: 111
         IntSummaryStatistics stats =
                 list2.stream().collect(Collectors.summarizingInt(Person::getAge));
-        System.out.println(stats);     //IntSummaryStatistics{count=4, sum=111,
-                                       //    min=23, average=27.750000, max=33}
+        System.out.println(stats);     //prints: IntSummaryStatistics{count=4, sum=111,
+                                       //               min=23, average=27.750000, max=33}
         System.out.println(stats.getCount());    //4
         System.out.println(stats.getSum());      //111
         System.out.println(stats.getMin());      //23
@@ -362,8 +362,8 @@ public class TerminalOps {
         Map<Boolean, List<Person>> map2 =
                 list2.stream().collect(Collectors.partitioningBy(p->p.getAge() > 27));
         System.out.println(map2);
-                        //{false=[Person{name='Bob', age=23}, Person{name='Bill', age=27},
-                       //  true=[Person{name='Jim', age=33}, Person{name='Jill', age=28}]}
+                        //prints: {false=[Person{name='Bob', age=23}, Person{name='Bill', age=27},
+                       //          true=[Person{name='Jim', age=33}, Person{name='Jill', age=28}]}
 
         List<Person> list3 = List.of(new Person(23, "Bob"),
                                      new Person(33, "Jim"),
@@ -372,8 +372,8 @@ public class TerminalOps {
         Map<Integer, List<Person>> map3 =
                 list3.stream().collect(Collectors.groupingBy(Person::getAge));
         System.out.println(map3);
-                        //{33=[Person{name='Jim', age=33}, Person{name='Bill', age=33}],
-                        // 23=[Person{name='Bob', age=23}, Person{name='Jill', age=23}]}
+                        //prints: {33=[Person{name='Jim', age=33}, Person{name='Bill', age=33}],
+                        //         23=[Person{name='Bob', age=23}, Person{name='Jill', age=23}]}
     }
 
 }

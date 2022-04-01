@@ -1,4 +1,4 @@
-package com.packt.learnjava.ch16_microservices;
+package com.packt.learnjava.ch17_microservices;
 
 import io.vertx.rxjava.core.RxHelper;
 import io.vertx.rxjava.core.Vertx;
