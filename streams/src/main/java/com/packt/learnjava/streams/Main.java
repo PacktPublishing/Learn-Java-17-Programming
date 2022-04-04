@@ -4,25 +4,28 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Main {
     private static final String EXPECTED = "Expected";
     public static void main(String[] args) {
         try {
-            File file = getInputFile();
-            List<Person> list = getInputPersonList(file);
             Set<String> cities = new HashSet<>();
             Set<String> states = new HashSet<>();
             Set<Integer> zips = new HashSet<>();
             Map<Integer, Integer> oldestByZip = new HashMap<>();
             Map<Integer, String> oldestNameByZip = new HashMap<>();
-            list.stream().forEach(p -> {
+
+            File file = getInputFile();
+            List<Person> list = getInputPersonList(file);
+            list.stream().parallel().forEach(p -> {
                 cities.add(p.getCity());
                 states.add(p.getState());
                 zips.add(p.getZip());
@@ -61,18 +64,19 @@ public class Main {
     }
 
     private static List<String> validLine(String line){
-        List<String> values = new ArrayList<>();
         String[] arr = line.split(",");
         if(arr.length != 7){
             throw new RuntimeException(EXPECTED + " 7 column: " + line);
         }
-        for(String v: arr){
-            String val = v.trim();
+
+        List<String> values = Arrays.stream(arr).parallel().map(s -> {
+            String val = s.trim();
             if(val.isEmpty()){
                 throw new RuntimeException(EXPECTED + " only non-empty values: " + line);
             }
-            values.add(val);
-        }
+            return val;
+        }).toList();
+
         try {
             Integer.valueOf(values.get(2));
             Integer.valueOf(values.get(6));
