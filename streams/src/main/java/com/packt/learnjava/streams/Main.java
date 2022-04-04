@@ -51,6 +51,7 @@ public class Main {
     private static List<Person> getInputPersonList(File file) throws IOException {
         return Files.lines(file.toPath())
                 .skip(1)
+                .parallel()
                 .map(Main::validLine)
                 .map(l -> {
                     Person person = new Person(Integer.parseInt(l.get(2)), l.get(0), l.get(1));
@@ -58,6 +59,7 @@ public class Main {
                     return person;
                 }).toList();
     }
+
     private static List<String> validLine(String line){
         List<String> values = new ArrayList<>();
         String[] arr = line.split(",");
