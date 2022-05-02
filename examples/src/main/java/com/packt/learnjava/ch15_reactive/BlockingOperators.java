@@ -13,21 +13,18 @@ import java.util.stream.IntStream;
 
 public class BlockingOperators {
     public static void main(String... args){
-        squareRootsSum();
-        reuseObservable();
-        cacheObservableData();
         observableBlocking1();
         observableBlocking2();
         flowableBlocking();
-        singleBlocking1();
-        singleBlocking2();
+        singleBlocking();
         maybeBlocking();
         completableBlocking();
     }
 
     private static void completableBlocking(){
+        System.out.println("\ncompletableBlocking():");
         Completable obs = Completable.fromRunnable(() -> {
-            System.out.println("Running...");
+            System.out.println("Run");
             try {
                 TimeUnit.MILLISECONDS.sleep(200);
             } catch (InterruptedException e) {
@@ -49,84 +46,24 @@ public class BlockingOperators {
         obs.blockingAwait(15, TimeUnit.MILLISECONDS);
     }
 
-
-    private static void completableBlocking1(){
-        Completable obs = Completable.fromRunnable(() -> System.out.println("Run")); //prints: Run
-
-        Throwable ex = obs.delay(100, TimeUnit.MILLISECONDS).blockingGet();
-        System.out.println(ex);   //prints: null
-
-        //ex = obs.delay(100, TimeUnit.MILLISECONDS).blockingGet(15, TimeUnit.MILLISECONDS);
-        //java.util.concurrent.TimeoutException: The source did not signal an event for 15 milliseconds and has been terminated.
-
-        ex = obs.delay(100, TimeUnit.MILLISECONDS).blockingGet(150, TimeUnit.MILLISECONDS);
-        System.out.println(ex);   //prints: null
-
-        obs.delay(100, TimeUnit.MILLISECONDS).blockingAwait();
-
-        obs.delay(100, TimeUnit.MILLISECONDS).blockingAwait(15, TimeUnit.MILLISECONDS);
-    }
-
     private static void maybeBlocking(){
+        System.out.println("\nmaybeBlocking():");
         Maybe<Integer> obs = Maybe.just(42);
 
         int r = obs.delay(100, TimeUnit.MILLISECONDS).blockingGet();
         System.out.println(r);   //prints: 42
-
-        List<Integer> list = new ArrayList<>();
-        obs.delay(100, TimeUnit.MILLISECONDS)
-                .subscribe(i -> {
-                    if(list.size() == 1){
-                        list.remove(0);
-                    }
-                    list.add(i);
-                });
-
-        System.out.println(list);  //prints: []
     }
 
-    private static void singleBlocking2(){
-        Single<Integer> obs = Single.just(42);
-
-        List<Integer> list = new ArrayList<>();
-        obs.delay(100, TimeUnit.MILLISECONDS)
-                .subscribe(i -> {
-                    if(list.size() == 1){
-                        list.remove(0);
-                    }
-                    list.add(i);
-                });
-
-        System.out.println(list);  //prints: []
-
-        try {
-            TimeUnit.MILLISECONDS.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(list);  //prints: [42]
-    }
-
-    private static void singleBlocking1(){
+    private static void singleBlocking(){
+        System.out.println("\nsingleBlocking():");
         Single<Integer> obs = Single.just(42);
 
         int r = obs.delay(100, TimeUnit.MILLISECONDS).blockingGet();
         System.out.println(r);   //prints: 42
-
-        List<Integer> list = new ArrayList<>();
-        obs.delay(100, TimeUnit.MILLISECONDS)
-                .subscribe(i -> {
-                    if(list.size() == 1){
-                        list.remove(0);
-                    }
-                    list.add(i);
-                });
-
-        System.out.println(list);  //prints: []
     }
 
     private static void flowableBlocking(){
+        System.out.println("\nflowableBlocking():");
         Flowable<Integer> obs = Flowable.range(1,5);
 
         Double d2 = obs.filter(i -> i % 2 == 0)
@@ -137,8 +74,8 @@ public class BlockingOperators {
         System.out.println(d2);   //prints: 2.0
     }
 
-
     private static void observableBlocking2(){
+        System.out.println("\nobservableBlocking2():");
         Observable<Integer> obs = Observable.range(1,5);
 
         List<Double> list = new ArrayList<>();
@@ -155,7 +92,7 @@ public class BlockingOperators {
         System.out.println(list);   //prints: []
 
         try {
-            TimeUnit.MILLISECONDS.sleep(200);
+            TimeUnit.MILLISECONDS.sleep(250);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -163,6 +100,7 @@ public class BlockingOperators {
     }
 
     private static void observableBlocking1(){
+        System.out.println("\nobservableBlocking1():");
         Observable<Integer> obs = Observable.range(1,5);
 
         Double d2 = obs.filter(i -> i % 2 == 0)
@@ -184,50 +122,6 @@ public class BlockingOperators {
                 list.add(d);
            });
         System.out.println(list);   //prints: []
-    }
-
-    private static void cacheObservableData(){
-        Observable<Double> observable = Observable.range(1,5)
-                .filter(i -> i % 2 == 0)
-                .doOnNext(System.out::println)  //prints 2 and 4 only once
-                .map(Math::sqrt)
-                .cache();
-        observable
-                .reduce((r, d) -> r + d)
-                .subscribe(System.out::println); //prints: 3.414213562373095
-        observable
-                .reduce((r, d) -> r + d)
-                .map(r -> r / 2)
-                .subscribe(System.out::println);  //prints: 1.7071067811865475
-    }
-
-    private static void reuseObservable(){
-        Observable<Double> observable = Observable.range(1, 5)
-                .filter(i -> i % 2 == 0)
-                .doOnNext(System.out::println)    //prints 2 and 4 twice
-                .map(Math::sqrt);
-        observable
-                .reduce((r, d) -> r + d)
-                .subscribe(System.out::println);  //prints: 3.414213562373095
-        observable
-                .reduce((r, d) -> r + d)
-                .map(r -> r / 2)
-                .subscribe(System.out::println);  //prints: 1.7071067811865475
-    }
-
-    private static void squareRootsSum(){
-        double a = IntStream.rangeClosed(1, 5)
-                            .filter(i -> i % 2 == 0)
-                            .mapToDouble(Double::valueOf)
-                            .map(Math::sqrt)
-                            .sum();
-        System.out.println(a); //prints: 3.414213562373095
-
-        Observable.range(1, 5)
-                  .filter(i -> i % 2 == 0)
-                  .map(Math::sqrt)
-                  .reduce((r, d) -> r + d)
-                  .subscribe(System.out::println); //prints: 3.414213562373095
     }
 
 }

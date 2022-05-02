@@ -14,10 +14,11 @@ public class Scheduler {
         parallel3();
         subscribeOn1();
         subscribeOn2();
-        observeOnsubscribeOn();
+        subscribeOnAndObserveOn();
     }
 
-    private static void observeOnsubscribeOn(){
+    private static void subscribeOnAndObserveOn(){
+        System.out.println("\nobserveOnsubscribeOn():");
         Observable.just("a", "b", "c")
                 .subscribeOn(Schedulers.computation())
                 .doAfterNext(s -> System.out.println("1: " + Thread.currentThread().getName() + " => " + s))
@@ -28,6 +29,7 @@ public class Scheduler {
     }
 
     private static void subscribeOn2(){
+        System.out.println("\nsubscribeOn2():");
         Observable.just("a", "b", "c")
                 .subscribeOn(Schedulers.computation())
                 .doAfterNext(s -> System.out.println("1: " + Thread.currentThread().getName() + " => " + s))
@@ -37,6 +39,7 @@ public class Scheduler {
     }
 
     private static void subscribeOn1(){
+        System.out.println("\nsubscribeOn1():");
         Observable.just("a", "b", "c")
                 .doAfterNext(s -> System.out.println("1: " + Thread.currentThread().getName() + " => " + s))
                 .subscribeOn(Schedulers.computation())
@@ -46,7 +49,7 @@ public class Scheduler {
     }
 
     private static void parallel3(){
-
+        System.out.println("\nparallel3():");
         ParallelFlowable src = Flowable.fromArray("one","two","three").parallel();
         src.runOn(Schedulers.computation())
            .doAfterNext(s -> System.out.println("1: " + Thread.currentThread().getName() + " => " + s))
@@ -61,6 +64,7 @@ public class Scheduler {
     }
 
     private static void parallel2(){
+        System.out.println("\nparallel2():");
         Observable.fromArray("one","two","three")
                 .observeOn(Schedulers.computation())
                 .doAfterNext(s -> System.out.println("1: " + Thread.currentThread().getName() + " => " + s))
@@ -74,6 +78,7 @@ public class Scheduler {
     }
 
     private static void parallel1(){
+        System.out.println("\nparallel1():");
         Observable.fromArray("one","two","three")
                 .doAfterNext(s -> System.out.println("1: " + Thread.currentThread().getName() + " => " + s))
                 .flatMap(w -> Observable.fromArray(w.split(""))

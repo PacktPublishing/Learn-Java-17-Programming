@@ -7,11 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class CreateObservable {
     public static void main(String... args){
-        create();
-    }
 
-    private static void create(){
-        System.out.println();
         ObservableOnSubscribe<String> source = emitter -> {
             emitter.onNext("One");
             emitter.onNext("Two");

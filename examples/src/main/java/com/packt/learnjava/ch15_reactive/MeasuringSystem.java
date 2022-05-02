@@ -19,6 +19,7 @@ public class MeasuringSystem {
     }
 
     private static void threadPool(){
+        System.out.println("\nthreadPool():");
         ExecutorService pool = Executors.newFixedThreadPool(3);
         List<Integer> ids = IntStream.range(1, 11)
                 .mapToObj(i -> i).collect(Collectors.toList());
@@ -29,6 +30,7 @@ public class MeasuringSystem {
     }
 
     private static void completabelFuture(){
+        System.out.println("\ncompletabelFuture():");
         List<Integer> ids = IntStream.range(1, 11)
                 .mapToObj(i -> i).collect(Collectors.toList());
         List<CompletableFuture<Double>> list = ids.stream()
@@ -47,6 +49,7 @@ public class MeasuringSystem {
     }
 
     private static void compareSequentialAndParallelProcessing() {
+        System.out.println("\ncompareSequentialAndParallelProcessing():");
         List<Integer> ids = IntStream.range(1, 11)
                 .mapToObj(i -> i).collect(Collectors.toList());
 

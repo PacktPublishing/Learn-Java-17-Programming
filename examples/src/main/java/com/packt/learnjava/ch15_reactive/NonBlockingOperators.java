@@ -20,6 +20,7 @@ public class NonBlockingOperators {
     }
 
     private static void conditional(){
+        System.out.println("\n\nconditional():");
         Observable<String> obs = Observable.just("one")
                 .flatMap(s -> Observable.fromArray(s.split("")));
         Single<Boolean> cont = obs.contains("n");
@@ -45,6 +46,7 @@ public class NonBlockingOperators {
         System.out.println(equal.blockingGet());       //prints: false
     }
     private static void utilities(){
+        System.out.println("\n\nutilities():");
         Observable<String> obs = Observable.just("one")
                 .flatMap(s -> Observable.fromArray(s.split("")));
 
@@ -66,10 +68,9 @@ public class NonBlockingOperators {
         pauseMs(25);
     }
     private static void events(){
+        System.out.println("\n\nevents():");
         Observable<String> obs = Observable.just("one")
                 .flatMap(s -> Observable.fromArray(s.split("")));
-
-        System.out.println();
 
         obs.doOnComplete(() -> System.out.println("Completed!")) //prints: Completed!
                 .subscribe(v -> {
@@ -78,6 +79,7 @@ public class NonBlockingOperators {
         pauseMs(25);
     }
     private static void exceptions(){
+        System.out.println("\n\nexceptions():");
         Observable<String> obs = Observable.just("one")
                 .flatMap(s -> Observable.fromArray(s.split("")));
 
@@ -100,6 +102,7 @@ public class NonBlockingOperators {
         pauseMs(100);
     }
     private static void combined(){
+        System.out.println("\n\ncombined():");
         Observable<String> obs1 = Observable.just("one")
                 .flatMap(s -> Observable.fromArray(s.split("")));
         Observable<String> obs2 = Observable.just("two")
@@ -122,9 +125,11 @@ public class NonBlockingOperators {
         System.out.println();
         Observable.zip(obs1, obs2, obs1,  (x,y,z) -> "("+x+y+z+")")
                 .subscribe(System.out::print);
+        System.out.println();
         pauseMs(100);
     }
     private static void filtering(){
+        System.out.println("\nfiltering():");
         Observable<String> obs = Observable.just("onetwo")
                 .flatMap(s -> Observable.fromArray(s.split("")));
 
@@ -136,12 +141,10 @@ public class NonBlockingOperators {
                 })
                 .debounce(10, TimeUnit.MILLISECONDS)
                 .forEach(System.out::print);     //prints: eo
-
         System.out.println();
 
         obs.distinct()
                 .forEach(System.out::print);     //prints: onetw
-
         System.out.println();
 
         obs.elementAt(3)
@@ -149,26 +152,27 @@ public class NonBlockingOperators {
 
         obs.filter(s -> s.equals("o"))
                 .forEach(System.out::print);     //prints: oo
-
         System.out.println();
 
         obs.firstElement()
                 .subscribe(System.out::println);     //prints: o
 
-
         obs.ignoreElements()
-                .subscribe(() -> System.out.println("Completed!"));     //prints: Completed!
+                .subscribe(() -> System.out.print("Completed!"));     //prints: Completed!
 
-        Observable.interval(5, TimeUnit.MILLISECONDS)
+        Disposable desp = Observable.interval(5, TimeUnit.MILLISECONDS)
                   .sample(10, TimeUnit.MILLISECONDS)
                   .subscribe(v -> System.out.print(v + " "));     //prints: 1 3 4 6 8
+        System.out.println();
         pauseMs(50);
+        desp.dispose();
     }
     private static void transforming(){
+        System.out.println("\ntransforming():");
         Observable<String> obs = Observable.fromArray("one", "two");
 
         obs.map(s ->  s.contains("w") ? 1 : 0).forEach(System.out::print); //prints: 01
-
+        System.out.println();
         List<String> os = new ArrayList<>();
         List<String> noto = new ArrayList<>();
         obs.flatMap(s -> Observable.fromArray(s.split("")))

@@ -8,23 +8,18 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class DisposableUsage {
-
     public static void main(String... args){
         disposable1();
         disposable2();
     }
 
+    private static void disposable1(){
+        System.out.println("\ndisposable1():");
+        Observable<Integer> obs = Observable.range(1,5);
 
-    private static void disposable2(){
-        Observable source = Observable.range(1,5);
-        Disposable disposable = source.subscribe();
-        Observable<Integer> obs = Observable.using(
-                () -> disposable,
-                r -> source,
-                r -> System.out.println("Disposed: " + r) //prints: Disposed: DISPOSED
-        );
         List<Double> list = new ArrayList<>();
-        obs.filter(i -> i % 2 == 0)
+        Disposable disposable =
+             obs.filter(i -> i % 2 == 0)
                 .doOnNext(System.out::println)  //prints 2 and 4
                 .map(Math::sqrt)
                 .delay(100, TimeUnit.MILLISECONDS)
@@ -34,32 +29,38 @@ public class DisposableUsage {
                     }
                     list.add(d);
                 });
-        System.out.println(list);                  //prints: []
+        System.out.println(disposable.isDisposed()); //prints: false
+        System.out.println(list);                    //prints: []
+
         try {
             TimeUnit.MILLISECONDS.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(list);                  //prints: [2.0]
+
+        System.out.println(disposable.isDisposed());  //prints: true
+        System.out.println(list);                     //prints: [2.0]
+
     }
 
-    private static void disposable1(){
+    private static void disposable2(){
+        System.out.println("\ndisposable2():");
         Observable<Integer> obs = Observable.range(1,5);
 
         List<Double> list = new ArrayList<>();
         Disposable disposable =
-                obs.filter(i -> i % 2 == 0)
-                        .doOnNext(System.out::println)  //prints 2 and 4
-                        .map(Math::sqrt)
-                        .delay(100, TimeUnit.MILLISECONDS)
-                        .subscribe(d -> {
-                            if(list.size() == 1){
-                                list.remove(0);
-                            }
-                            list.add(d);
-                        });
-        System.out.println(list);   //prints: []
+             obs.filter(i -> i % 2 == 0)
+                .doOnNext(System.out::println)  //prints 2 and 4
+                .map(Math::sqrt)
+                .delay(100, TimeUnit.MILLISECONDS)
+                .subscribe(d -> {
+                    if(list.size() == 1){
+                        list.remove(0);
+                    }
+                    list.add(d);
+                });
         System.out.println(disposable.isDisposed()); //prints: false
+        System.out.println(list);                    //prints: []
         disposable.dispose();
 
         try {
@@ -69,10 +70,6 @@ public class DisposableUsage {
         }
 
         System.out.println(disposable.isDisposed());  //prints: true
-        disposable.dispose();
-
-        System.out.println(list);   //prints: [2.0]
-
+        System.out.println(list);                     //prints: [2.0]
     }
-
 }
