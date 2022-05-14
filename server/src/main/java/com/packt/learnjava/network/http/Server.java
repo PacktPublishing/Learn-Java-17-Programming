@@ -32,8 +32,8 @@ public class Server {
     private static class PostHandler implements HttpHandler {
         public void handle(HttpExchange exch) {
             System.out.println();   //to skip the row in the output
-            //System.out.println(exch.getRequestURI());            //prints: /something
-            //System.out.println(exch.getHttpContext().getPath()); //prints: /something
+            System.out.println(exch.getRequestURI());            //prints: /something
+            System.out.println(exch.getHttpContext().getPath()); //prints: /something
             try (InputStream is = exch.getRequestBody();
                  BufferedReader in = new BufferedReader(new InputStreamReader(is));
                  OutputStream os = exch.getResponseBody()){

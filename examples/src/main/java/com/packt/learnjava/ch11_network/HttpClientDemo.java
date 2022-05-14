@@ -24,7 +24,7 @@ public class HttpClientDemo {
         /* Run Server class before uncommenting and running
          * any of the following examples
          */
-        //get();
+        get();
         //post();
         //getAsync1();
         //getAsync2();
@@ -32,16 +32,16 @@ public class HttpClientDemo {
         //postAsyncMultiple();
         //postAsyncMultipleCustomPool();
         //push();
-        webSocket();
+        //webSocket();
     }
 
     private static void get(){
-        HttpClient httpClient = HttpClient.newHttpClient();
 /*
         HttpClient httpClient = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_2)  // default
                 .build();
 */
+        HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:3333/something"))

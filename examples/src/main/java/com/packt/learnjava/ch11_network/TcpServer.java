@@ -12,11 +12,11 @@ public class TcpServer {
         try(Socket s = new ServerSocket(3333).accept();
             DataInputStream dis = new DataInputStream(s.getInputStream());
             DataOutputStream dout = new DataOutputStream(s.getOutputStream());
-            BufferedReader console = new BufferedReader(new InputStreamReader(System.in))){
-            while(true){
+            BufferedReader console = new BufferedReader(new InputStreamReader(System.in))) {
+            while (true) {
                 String msg = dis.readUTF();
                 System.out.println("Client said: " + msg);
-                if("end".equalsIgnoreCase(msg)){
+                if ("end".equalsIgnoreCase(msg)) {
                     break;
                 }
 
@@ -24,7 +24,7 @@ public class TcpServer {
                 msg = console.readLine();
                 dout.writeUTF(msg);
                 dout.flush();
-                if("end".equalsIgnoreCase(msg)){
+                if ("end".equalsIgnoreCase(msg)) {
                     break;
                 }
             }

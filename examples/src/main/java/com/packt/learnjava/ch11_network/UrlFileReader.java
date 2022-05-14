@@ -14,7 +14,8 @@ public class UrlFileReader {
                 while(data != -1){
                     System.out.print((char) data); //prints: Hello!
                     data = is.read();
-                }            }
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
