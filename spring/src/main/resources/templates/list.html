@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>LearnJava: Spring Boot: List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <span th:if="${message}">
+        <span th:text="${message}">Person successfully deleted</span>
+        <br><br>
+    </span>
+    <table>
+        <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>DOB</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${persons.empty}">
+                <td colspan="5">There is no any person</td>
+            </tr>
+            <tr th:each="person : ${persons}">
+                <td><span th:text="${person.firstName}">First</span></td>
+                <td><span th:text="${person.lastName}">Last</span></td>
+                <td><span th:text="${person.dob}">2020-01-21</span></td>
+                <td><a th:href="@{/ui/edit/{id}(id=${person.id})}" class="btn btn-primary">Edit</a></td>
+                <td><a th:href="@{/ui/delete/{id}(id=${person.id})}" class="btn btn-danger">Delete</a></td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align: center"><a th:href="@{/ui/new}" class="btn btn-primary">New</a></td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align: center"><a th:href="@{/ui}" class="btn btn-primary">Home</a></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

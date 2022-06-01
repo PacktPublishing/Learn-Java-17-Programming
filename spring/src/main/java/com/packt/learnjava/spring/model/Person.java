@@ -1,5 +1,7 @@
 package com.packt.learnjava.spring.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,39 +9,79 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Person {
     private int id;
     private LocalDate dob;
     private String firstName, lastName;
     public Person(){}
-    public Person(String firstName, String lastName, LocalDate dob){
-        if (dob == null) {
-            throw new RuntimeException("Date of birth cannot be null");
-        }
-        this.dob = dob;
-        this.firstName = firstName == null ? "" : firstName;
-        this.lastName = lastName == null ? "" : lastName;
-    }
     public Person(int id, String firstName,
                   String lastName, LocalDate dob) {
-        this(firstName, lastName, dob);
+        this.id = id;
+        this.dob = dob;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    public void setId(int id) {
         this.id = id;
     }
+
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public int getId() { return id; }
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate getDob() { return dob; }
     public String getFirstName() { return firstName;}
     public String getLastName() { return lastName; }
 
-    private static final String INSERT = "insert into person (first_name, last_name, dob) values (?, ?, ?::date)";
-    public static void insert(Connection conn, Person person) {
-        try (PreparedStatement st = conn.prepareStatement(INSERT)) {
-            st.setString(1, person.getFirstName());
-            st.setString(2, person.getLastName());
-            st.setString(3, person.getDob().toString());
-            st.execute();
+    public String validateForInsert(){
+        List<String> errors = new ArrayList<>();
+        if(this.dob == null){
+            errors.add("DOB is required");
+        }
+        if(this.firstName == null || "".equals(this.firstName.trim())){
+            errors.add("firstName is required");
+        }
+        if(this.lastName == null || "".equals(this.lastName.trim())){
+            errors.add("lastName is required");
+        }
+        return errors.size() == 0 ? "" : "Errors: " + errors.stream().collect(Collectors.joining(", "));
+    }
+
+    public void prepareForUpdate(Person person){
+        if(person.getDob() != null){
+            setDob(person.getDob());
+        }
+        if(person.getFirstName() != null && !"".equals(person.getFirstName().trim())){
+            setFirstName(person.getFirstName());
+        }
+        if(person.getLastName() == null && !"".equals(person.getLastName().trim())){
+            setLastName(person.getLastName());
+        }
+    }
+    private static final String INSERT = "insert into person (first_name, last_name, dob) values (?, ?, ?::date) returning id";
+    public static int insert(Connection conn, Person person) {
+        try (PreparedStatement ps = conn.prepareStatement(INSERT)) {
+            ps.setString(1, person.getFirstName());
+            ps.setString(2, person.getLastName());
+            ps.setString(3, person.getDob().toString());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt(1);
         } catch (SQLException ex) {
             ex.printStackTrace();
+            throw new RuntimeException();
         }
     }
 
@@ -56,26 +98,28 @@ public class Person {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+            throw new RuntimeException();
         }
         return list;
     }
 
     private static final String SELECT_BY_ID = "select * from person where id = ?";
-    public static List<Person> selectById(Connection conn, int id) {
-        List<Person> list = new ArrayList<>();
+    public static Person selectById(Connection conn, int id) {
+        Person person = new Person();
         try (PreparedStatement st = conn.prepareStatement(SELECT_BY_ID)) {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                list.add(new Person(rs.getInt("id"),
-                        rs.getString("first_name"),
-                        rs.getString("last_name"),
-                        rs.getDate("dob").toLocalDate()));
+            if (rs.next()) {
+                person.setId(id);
+                person.setFirstName(rs.getString("first_name"));
+                person.setLastName(rs.getString("last_name"));
+                person.setDob(rs.getDate("dob").toLocalDate());
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+            throw new RuntimeException();
         }
-        return list;
+        return person;
     }
 
     private static final String UPDATE_BY_ID = "update person set first_name = ?, last_name = ?, dob = ?::date where id = ?";
@@ -88,6 +132,7 @@ public class Person {
             st.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
+            throw new RuntimeException();
         }
     }
 
@@ -98,6 +143,7 @@ public class Person {
             st.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
+            throw new RuntimeException();
         }
     }
 

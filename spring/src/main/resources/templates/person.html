@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>LearnJava: Spring Boot: Person</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<span th:if="${person.id == 0}"><h3>New Person</h3></span>
+<span th:if="${person.id != 0}"><h3>Update Person</h3></span>
+<form action="#" th:action="@{/ui/save}" th:object="${person}" method="post">
+    <input type="hidden" th:field="*{id}" th:value="${person.id}"/>
+    <table>
+        <tr>
+            <td><label>First name</label></td>
+            <td><input type="text" th:field="*{firstName}" placeholder="First" required="true" pattern="[A-Za-z]+"></td>
+        </tr>
+        <tr>
+            <td><label>Last name</label></td>
+            <td><input type="text" th:field="*{lastName}" placeholder="Last" required="true" pattern="[A-Za-z]+"></td>
+        </tr>
+        <tr>
+            <td><label>DOB</label></td>
+            <td><input type="date" th:field="*{dob}" placeholder="MM-dd-yyyy" required="true"></td>
+        </tr>
+        <tr>
+            <td colspan="3" style="text-align: center"><input type="submit" value="Save"></td>
+        </tr>
+        <tr>
+            <td colspan="3" style="text-align: center"><a th:href="@{/ui}" class="btn btn-primary">Home</a></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
