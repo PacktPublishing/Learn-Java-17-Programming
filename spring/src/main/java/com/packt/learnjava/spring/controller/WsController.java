@@ -1,6 +1,8 @@
 package com.packt.learnjava.spring.controller;
 
 import com.packt.learnjava.spring.model.Person;
+import com.packt.learnjava.spring.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,43 +14,74 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/ws")
 public class WsController {
+    @Autowired
+    PersonService personService;
+
     @GetMapping("/list")
-    private List<Person> list() {
-        //Read all Person records from the database
-        Person mike = new Person(1, "Mike", "Brown", LocalDate.of(2002, 8, 14));
-        Person jane = new Person(2, "Jane", "McDonald", LocalDate.of(2000, 3, 21));
-        Person jill = new Person(3, "Jill", "Grey", LocalDate.of(2001, 4, 1));
-        return List.of(mike, jane, jill);
+    private ResponseEntity<List<Person>> list() {
+        try {
+            return ResponseEntity.ok().body(personService.getAllPersons());
+        } catch (Exception ex){
+            return ResponseEntity.internalServerError().body(new ArrayList<>());
+        }
     }
 
     @PostMapping(value = "/new", consumes = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<String> newPerson(@RequestBody Person person){
-        //Insert new Person record in the database
-        person.setId(42);
-        return ResponseEntity.ok().body(person + " successfully created.");
+        String error = person.validateForInsert();
+        if(!"".equals(error)){
+            return ResponseEntity.badRequest().body(error);
+        }
+        try {
+            Person newPerson = personService.newPerson(person);
+            return ResponseEntity.ok().body("New " + newPerson + " successfully created");
+        } catch (Exception ex){
+            return ResponseEntity.internalServerError().body("");
+        }
     }
 
     @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<String> update(@RequestBody Person person){
-        if(person.getId() == 0){
-            return ResponseEntity.badRequest().body("The id value is required.");
-        } else {
-            //Update the Person record (by id) in the database
-            return ResponseEntity.ok().body(person + " successfully updated.");
+        try {
+            if(person.getId() == 0){
+                return ResponseEntity.badRequest().body("The id value is required.");
+            } else {
+                Person existingPerson = personService.getPersonById(person.getId());
+                if(existingPerson.getId() > 0){
+                    personService.updatePerson(existingPerson, person);
+                    return ResponseEntity.ok().body(person + " successfully updated.");
+                } else {
+                    return ResponseEntity.badRequest().body("Person record with id=" + person.getId() + " not found.");
+                }
+            }
+        } catch (Exception ex){
+            return ResponseEntity.internalServerError().body("");
         }
     }
 
     @DeleteMapping("/delete/{id}")
     private ResponseEntity<String> delete(@PathVariable int id){
-        //Delete the Person record (by id) in the database
-        Person person = new Person(id, "Mike", "Brown", LocalDate.of(2002, 8, 14));
-        return ResponseEntity.ok().body(person + " successfully deleted.");
+        try {
+            if(id == 0 || id < 0){
+                return ResponseEntity.badRequest().body("The id value has to be positive integer");
+            } else {
+                Person existingPerson = personService.getPersonById(id);
+                if(existingPerson.getId() > 0){
+                    personService.deletePerson(id);
+                    return ResponseEntity.ok().body(existingPerson + " successfully deleted.");
+                } else {
+                    return ResponseEntity.badRequest().body("Person record with id=" + id + " not found.");
+                }
+            }
+        } catch (Exception ex){
+            return ResponseEntity.internalServerError().body("");
+        }
     }
 
 }

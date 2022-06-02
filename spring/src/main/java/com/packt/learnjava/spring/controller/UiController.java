@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.sql.DataSource;
-import java.time.LocalDate;
-import java.util.List;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/ui")
 public class UiController{
+    private static String INTERNAL_ERROR = "Unexpected condition. Please, contact the application administrator or try again later";
     @Autowired
     PersonService personService;
 
@@ -28,19 +27,28 @@ public class UiController{
 
     @GetMapping("/list")
     private String list(Model model){
-        //Read all Person records from the database
-        Person mike = new Person(1, "Mike", "Brown", LocalDate.of(2002, 8, 14));
-        Person jane = new Person(2, "Jane", "McDonald", LocalDate.of(2000, 3, 21));
-        Person jill = new Person(3, "Jill", "Grey", LocalDate.of(2001, 4, 1));
-        model.addAttribute("persons", List.of(mike, jane, jill));
+        try {
+            model.addAttribute("persons", personService.getAllPersons());
+        } catch (Exception ex){
+            model.addAttribute("persons", new ArrayList<>());
+            model.addAttribute("message", INTERNAL_ERROR);
+        }
         return "list";
     }
 
     @GetMapping("/delete/{id}")
     private String delete(Model model, @PathVariable int id){
-        //Delete the Person record (by id) in the database
-        Person person = new Person(id, "Mike", "Brown", LocalDate.of(2002, 8, 14));
-        model.addAttribute("message", person + " successfully deleted");
+        try {
+            Person existingPerson = personService.getPersonById(id);
+            if(existingPerson.getId() > 0){
+                personService.deletePerson(id);
+                model.addAttribute("message", existingPerson + " successfully deleted");
+            } else {
+                model.addAttribute("message", "Person record is not found");
+            }
+        } catch (Exception ex){
+            model.addAttribute("message", INTERNAL_ERROR);
+        }
         return list(model);
     }
 
@@ -52,21 +60,41 @@ public class UiController{
 
     @GetMapping("/edit/{id}")
     private String update(Model model, @PathVariable int id){
-        //Read the Person record (by id) from the database
-        Person person = new Person(id, "Mike", "Brown", LocalDate.of(2002, 8, 14));
-        model.addAttribute("person", person);
+        try {
+            Person existingPerson = personService.getPersonById(id);
+            if(existingPerson.getId() > 0){
+                model.addAttribute("person", existingPerson);
+            } else {
+                model.addAttribute("message", "Person record is not found");
+            }
+        } catch (Exception ex){
+            model.addAttribute("message", INTERNAL_ERROR);
+        }
         return "person";
     }
 
     @PostMapping("/save")
     private String save(Model model, @ModelAttribute Person person){
-        if(person.getId() == 0){
-            //Store new Person record (by id) in the database
-            personService.insert(person);
-            model.addAttribute("message", "New " + person + " successfully created");
-        } else {
-            //Update the Person record (by id) in the database
-            model.addAttribute("message", person + " successfully updated");
+        try {
+            if(person.getId() == 0){
+                String error = person.validateForInsert();
+                if("".equals(error)){
+                    Person newPerson = personService.newPerson(person);
+                    model.addAttribute("message", "New " + newPerson + " successfully created");
+                } else {
+                    model.addAttribute("message", error);
+                }
+            } else {
+                Person existingPerson = personService.getPersonById(person.getId());
+                if(existingPerson.getId() > 0){
+                    personService.updatePerson(existingPerson, person);
+                    model.addAttribute("message", person + " successfully updated");
+                } else {
+                    model.addAttribute("message", person + " record not found.");
+                }
+            }
+        } catch (Exception ex){
+            model.addAttribute("message", INTERNAL_ERROR);
         }
         return list(model);
     }

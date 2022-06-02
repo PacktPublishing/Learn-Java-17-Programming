@@ -59,15 +59,15 @@ public class Person {
         return errors.size() == 0 ? "" : "Errors: " + errors.stream().collect(Collectors.joining(", "));
     }
 
-    public void prepareForUpdate(Person person){
-        if(person.getDob() != null){
-            setDob(person.getDob());
+    public void prepareForUpdate(Person newPerson){
+        if(newPerson.getDob() != null){
+            setDob(newPerson.getDob());
         }
-        if(person.getFirstName() != null && !"".equals(person.getFirstName().trim())){
-            setFirstName(person.getFirstName());
+        if(newPerson.getFirstName() != null && !"".equals(newPerson.getFirstName().trim())){
+            setFirstName(newPerson.getFirstName());
         }
-        if(person.getLastName() == null && !"".equals(person.getLastName().trim())){
-            setLastName(person.getLastName());
+        if(newPerson.getLastName() != null && !"".equals(newPerson.getLastName().trim())){
+            setLastName(newPerson.getLastName());
         }
     }
     private static final String INSERT = "insert into person (first_name, last_name, dob) values (?, ?, ?::date) returning id";
