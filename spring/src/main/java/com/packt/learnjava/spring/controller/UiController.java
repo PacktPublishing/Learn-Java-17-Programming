@@ -2,7 +2,10 @@ package com.packt.learnjava.spring.controller;
 
 import com.packt.learnjava.spring.model.Person;
 import com.packt.learnjava.spring.service.PersonService;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 
@@ -17,12 +21,29 @@ import java.util.ArrayList;
 @RequestMapping("/ui")
 public class UiController{
     private static String INTERNAL_ERROR = "Unexpected condition. Please, contact the application administrator or try again later";
+
+    @Value("${server.port}")
+    private String port;
+
     @Autowired
     PersonService personService;
 
     @GetMapping(value = {"", "/"})
-    private String home(Model model){
+    private String home(Model model) {
+        addActuatorKey(model, "health");
+        addActuatorKey(model, "info");
         return "home";
+    }
+
+    private void addActuatorKey(Model model, String key) {
+        String resp = new RestTemplate().getForObject("http://localhost:" + port + "/actuator/" + key, String.class);
+        JSONParser parser = new JSONParser();
+        try {
+            model.addAttribute(key, parser.parse(resp));
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 
     @GetMapping("/list")

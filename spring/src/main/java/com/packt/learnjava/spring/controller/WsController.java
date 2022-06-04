@@ -68,7 +68,7 @@ public class WsController {
     @DeleteMapping("/delete/{id}")
     private ResponseEntity<String> delete(@PathVariable int id){
         try {
-            if(id == 0 || id < 0){
+            if(id <= 0){
                 return ResponseEntity.badRequest().body("The id value has to be positive integer");
             } else {
                 Person existingPerson = personService.getPersonById(id);

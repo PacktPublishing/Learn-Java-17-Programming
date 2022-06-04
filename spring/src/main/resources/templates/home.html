@@ -8,10 +8,63 @@
 <table>
     <tbody>
     <tr>
-        <td colspan="2" style="text-align: center"><a th:href="@{/ui/new}" class="btn btn-primary">New person</a></td>
+        <td style="vertical-align:top">App info:</td>
+        <td>
+            <table>
+                <tbody>
+                <tr><td>Name:</td><td><span th:text="${info.build.name}">spring</span></td></tr>
+                <tr><td>Group:</td><td><span th:text="${info.build.group}">com.packt.learnjava</span></td></tr>
+                <tr><td>Artifact:</td><td><span th:text="${info.build.artifact}">spring</span></td></tr>
+                <tr><td>Version:</td><td><span th:text="${info.build.version}">0.0.1-SNAPSHOT</span></td></tr>
+                <tr><td>Time:</td><td><span th:text="${info.build.time}">2022-06-03T07:57:17.620Z</span></td></tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<table>
+    <tbody>
+    <tr>
+        <td>Prop1:</td><td><span th:text="${info.group1.property1}">Value1</span></td>
     </tr>
     <tr>
-        <td colspan="2" style="text-align: center"><a th:href="@{/ui/list}" class="btn btn-primary">All persons</a></td>
+        <td>Prop2:</td><td><span th:text="${info.group1.property2}">Value2</span></td>
+    </tr>
+    <tr>
+        <td>Prop3:</td><td><span th:text="${info.property3}">Value3</span></td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<table>
+    <tbody>
+    <tr>
+        <td>App status:</td><td><span th:text="${health.status}">UP</span></td>
+    </tr>
+    <tr>
+        <td>DB status:</td><td><span th:text="${health.components.db.status}">UP</span></td>
+    </tr>
+    <tr>
+        <td>Disk status:</td><td><span th:text="${health.components.diskSpace.status}">UP</span></td>
+    </tr>
+    <tr>
+        <td>Disk total:</td><td><span th:text="${health.components.diskSpace.details.total/1024/1024/1024}">500</span> GB</td>
+    </tr>
+    <tr>
+        <td>Disk free:</td><td><span th:text="${health.components.diskSpace.details.free/1024/1024/1024}">300</span> GB</td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<table>
+    <tbody>
+    <tr>
+        <td style="text-align: center"><a th:href="@{/ui/new}" class="btn btn-primary">New person</a></td>
+    </tr>
+    <tr>
+        <td style="text-align: center"><a th:href="@{/ui/list}" class="btn btn-primary">All persons</a></td>
     </tr>
     </tbody>
 </table>
