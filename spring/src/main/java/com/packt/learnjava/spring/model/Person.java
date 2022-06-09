@@ -56,7 +56,7 @@ public class Person {
         if(this.lastName == null || "".equals(this.lastName.trim())){
             errors.add("lastName is required");
         }
-        return errors.size() == 0 ? "" : "Errors: " + errors.stream().collect(Collectors.joining(", "));
+        return errors.size() == 0 ? "" : "Errors:" + errors.stream().collect(Collectors.joining(", ", " ", "."));
     }
 
     public void prepareForUpdate(Person newPerson){
