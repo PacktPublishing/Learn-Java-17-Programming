@@ -84,4 +84,21 @@ public class WsController {
         }
     }
 
+    @GetMapping("/get/{id}")
+    private ResponseEntity<String> get(@PathVariable int id){
+        try {
+            if(id <= 0){
+                return ResponseEntity.badRequest().body("The id value has to be positive integer");
+            } else {
+                Person person = personService.getPersonByIdCB(id);
+                if(person.getId() > 0){
+                    return ResponseEntity.ok().body(person.toString());
+                } else {
+                    return ResponseEntity.badRequest().body("Person record with id=" + id + " not found.");
+                }
+            }
+        } catch (Exception ex){
+            return ResponseEntity.internalServerError().body("");
+        }
+    }
 }
