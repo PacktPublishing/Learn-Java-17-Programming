@@ -4,6 +4,8 @@ import com.packt.learnjava.spring.model.Person;
 import com.packt.learnjava.spring.service.PersonService;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 @Controller
 @RequestMapping("/ui")
 public class UiController{
+    private static Logger logger = LoggerFactory.getLogger(UiController.class);
     private static String INTERNAL_ERROR = "Unexpected condition. Please, contact the application administrator or try again later";
 
     @Value("${server.port}")
@@ -32,6 +35,7 @@ public class UiController{
     private String home(Model model) {
         addActuatorKey(model, "health");
         addActuatorKey(model, "info");
+        logger.info("Show home page!");
         return "home";
     }
 
