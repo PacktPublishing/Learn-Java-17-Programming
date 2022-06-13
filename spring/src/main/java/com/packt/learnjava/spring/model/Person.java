@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -87,6 +88,7 @@ public class Person {
 
     private static final String SELECT_ALL = "select * from person";
     public static List<Person> selectAll(Connection conn) {
+        System.out.println("Read from db " + LocalDateTime.now());
         List<Person> list = new ArrayList<>();
         try (PreparedStatement st = conn.prepareStatement(SELECT_ALL)) {
             ResultSet rs = st.executeQuery();
