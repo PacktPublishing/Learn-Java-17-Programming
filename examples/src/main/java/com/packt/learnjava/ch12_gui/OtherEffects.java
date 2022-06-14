@@ -32,6 +32,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
 public class OtherEffects extends Application {
@@ -44,17 +45,13 @@ public class OtherEffects extends Application {
     }
 
     public void start(Stage primaryStage) {
-        try {
+        try (InputStream is1 = getClass().getResourceAsStream("/packt.png");
+             InputStream is2 = getClass().getResourceAsStream("/mount.jpeg")){
             Text txt = new Text();
-            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-            String file = classLoader.getResource("packt.png").getFile();
-            FileInputStream inputP = new FileInputStream(file);
-            Image imageP = new Image(inputP);
+            Image imageP = new Image(is1);
             ImageView ivP = new ImageView(imageP);
 
-            String file2 = classLoader.getResource("mount.jpeg").getFile();
-            FileInputStream inputM = new FileInputStream(file2);
-            Image imageM = new Image(inputM);
+            Image imageM = new Image(is2);
             ImageView ivM = new ImageView(imageM);
             ivM.setPreserveRatio(true);
             ivM.setFitWidth(300);
