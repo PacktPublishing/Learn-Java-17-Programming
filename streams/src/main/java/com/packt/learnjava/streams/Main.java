@@ -2,6 +2,7 @@ package com.packt.learnjava.streams;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,7 +22,8 @@ public class Main {
             Map<Integer, Integer> oldestByZip = new HashMap<>();
             Map<Integer, String> oldestNameByZip = new HashMap<>();
 
-            File file = getInputFile();
+            URL url = Main.class.getClassLoader().getResource("input.csv");
+            File file = new File(url.toURI());
             List<Person> list = getInputPersonList(file);
             list.stream().parallel().forEach(p -> {
                 cities.add(p.getCity());
@@ -85,11 +87,5 @@ public class Main {
             throw new RuntimeException(EXPECTED + " zip code 5 digits only: " + line);
         }
         return values;
-    }
-
-    private static File getInputFile(){
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        String fileName = classLoader.getResource("input.csv").getFile();
-        return new File(fileName);
     }
 }

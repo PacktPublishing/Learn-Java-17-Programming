@@ -7,9 +7,9 @@ import java.util.function.Supplier;
 
 public class StandardFunctionalInterfaces {
     public static void main(String... args) {
-        consumer();
-        predicate();
-        supplier();
+        //consumer();
+        //predicate();
+        //supplier();
         function();
     }
 
