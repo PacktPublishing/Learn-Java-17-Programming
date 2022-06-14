@@ -152,13 +152,17 @@ public class OtherEffects extends Application {
                 FloatMap floatMap = new FloatMap();
                 floatMap.setWidth(w);
                 floatMap.setHeight(h1);
-                for (int k = 0; k < w; k++) {
-                    double v = (Math.sin(k / 20.0 * Math.PI) - 0.5) / 40.0;
-                    for (int j = 0; j < h1; j++) {
-                        floatMap.setSamples(k, j, 0.0f, (float) v);
+                try {
+                    for (int k = 0; k < w; k++) {
+                        double v = (Math.sin(k / 20.0 * Math.PI) - 0.5) / 40.0;
+                        for (int j = 0; j < h1; j++) {
+                            floatMap.setSamples(k, j, 0.0f, (float) v);
+                        }
                     }
+                    dm.setMapData(floatMap);
+                } catch (Exception ex){
+                    //just continue
                 }
-                dm.setMapData(floatMap);
                 return dm;
             case "DropShadow.radius":
                 double rd = Math.round((127.0 * d) * 10.0) / 10.0;
