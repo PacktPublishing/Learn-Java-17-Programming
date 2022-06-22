@@ -68,7 +68,7 @@ public class HtmlWebView extends Application {
     // rename start8() to start() and start() to start8()
     // and execute this class again, so on.
 
-    public void start(Stage primaryStage) {
+    public void start1(Stage primaryStage) {
         try {
             WebView wv = new WebView();
             WebEngine we = wv.getEngine();
@@ -175,11 +175,11 @@ public class HtmlWebView extends Application {
         primaryStage.show();
     }
 
-    public void start5(Stage primaryStage) {
+    public void start(Stage primaryStage) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         String file = classLoader.getResource("jb.mp3").getFile();
 
-        Text txt1 = new Text("What a beautiful music!");
+        Text txt1 = new Text("What beautiful music!");
         Text txt2 = new Text("If you don't hear music, turn up the volume.");
 
         File f = new File(file);
