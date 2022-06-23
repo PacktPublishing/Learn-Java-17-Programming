@@ -1,4 +1,4 @@
-package com.packt.learnjava.ch19_bestpractices;
+package com.packt.learnjava.ch17_bestpractices;
 
 public class Address implements Cloneable{
     private String street, city;

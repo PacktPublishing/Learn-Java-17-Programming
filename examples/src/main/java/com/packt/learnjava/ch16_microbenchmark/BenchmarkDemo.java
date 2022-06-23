@@ -1,4 +1,4 @@
-package com.packt.learnjava.ch18_microbenchmark;
+package com.packt.learnjava.ch16_microbenchmark;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
