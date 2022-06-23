@@ -1,0 +1,24 @@
+# Build and IDE artifacts
+/bin
+/target
+.classpath
+.project
+.settings
+rebel.xml
+*.iml
+.idea
+.mvn
+
+# Runtime artifacts
+*.log
+output.txt
+someClass.bin
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
