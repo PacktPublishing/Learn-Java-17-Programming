@@ -55,3 +55,7 @@ graduated from Moscow Institute of Physics and Technology, has worked as a theor
 
 ## Other books by the authors
 [Quick Introduction to Modules](https://www.packtpub.com/application-development/java-high-performance-apps-java-9?utm_source=github&utm_medium=repository&utm_campaign=9781789130515)
+### Download a free PDF
+
+ <i>If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no cost.<br>Simply click on the link to claim your free PDF.</i>
+<p align="center"> <a href="https://packt.link/free-ebook/9781803241432">https://packt.link/free-ebook/9781803241432 </a> </p>
